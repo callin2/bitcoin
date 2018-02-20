@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>spiral layout</title>
+    <script src="./socket.io.slim.js"></script>
+    <script src="./coffeescript.js"></script>
+</head>
+<body>
+<script type="text/coffeescript">
+    websocket = new WebSocket('wss://ws.blockchain.info/inv')
+
+    onOpen = (evt) ->
+        console.log evt
+        websocket.send(JSON.stringify {op:'unconfirmed_sub'});
+
+    onClose = (evt) ->
+        console.log evt
+
+    onMessage = (evt) ->
+        console.log 'onMessage', JSON.parse(evt.data)
+
+    onError = (err) ->
+        console.log err
+
+
+    websocket.onopen = onOpen
+    websocket.onclose = onClose
+    websocket.onmessage = onMessage
+    websocket.onerror = onError
+
+
+</script>
+</body>
+</html>
